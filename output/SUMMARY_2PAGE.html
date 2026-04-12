@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CareConnect — Analysis Summary</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:#222;font-size:13px;}
+  .page{width:210mm;min-height:297mm;padding:16mm 18mm;margin:0 auto;background:#fff;}
+  .page+.page{page-break-before:always;border-top:3px solid #2c3e50;margin-top:28px;}
+  h1{font-size:21px;color:#2c3e50;border-bottom:3px solid #e74c3c;padding-bottom:6px;margin-bottom:12px;}
+  h2{font-size:14px;color:#2c3e50;margin:14px 0 7px;border-left:4px solid #e74c3c;padding-left:8px;}
+  h3{font-size:12px;color:#555;margin:9px 0 5px;font-weight:600;}
+  .kpi-row{display:flex;gap:10px;margin:10px 0;}
+  .kpi{flex:1;background:#f4f6f8;border-radius:8px;padding:10px;text-align:center;border-top:4px solid #e74c3c;}
+  .kpi.green{border-top-color:#2ecc71;}.kpi.blue{border-top-color:#3498db;}.kpi.purple{border-top-color:#9b59b6;}
+  .kpi .val{font-size:24px;font-weight:bold;color:#2c3e50;}
+  .kpi .lbl{font-size:10px;color:#666;margin-top:3px;}
+  table{width:100%;border-collapse:collapse;margin:7px 0;font-size:11.5px;}
+  th{background:#2c3e50;color:#fff;padding:5px 7px;text-align:left;font-size:11px;}
+  td{padding:4px 7px;border-bottom:1px solid #eee;}
+  tr:nth-child(even){background:#f9f9f9;}
+  .rec{background:#f0f8f0;border-left:4px solid #2ecc71;padding:9px 12px;margin:7px 0;border-radius:4px;}
+  .rec strong{color:#27ae60;}
+  .warn{background:#fff8e1;border-left:4px solid #f39c12;padding:7px 10px;margin:7px 0;border-radius:4px;font-size:11px;}
+  .info{background:#eaf4fb;border-left:4px solid #3498db;padding:7px 10px;margin:7px 0;border-radius:4px;font-size:11px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:9px 0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:9px 0;}
+  .footer{font-size:10px;color:#aaa;text-align:center;margin-top:16px;border-top:1px solid #eee;padding-top:7px;}
+  .corr-box{display:inline-block;background:#ecf0f1;border-radius:6px;padding:6px 12px;margin:3px;font-size:12px;text-align:center;}
+  .corr-val{font-size:18px;font-weight:bold;color:#2c3e50;display:block;}
+  @media print{.page{page-break-after:always;}body{print-color-adjust:exact;-webkit-print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <h1>CareConnect — Caregiver Supply &amp; Unmet Demand Analysis</h1>
+  <p style="color:#777;font-size:11px;margin-bottom:12px;">
+    Period: Dec 2025–Jan 2026 &nbsp;|&nbsp; Data: shift_agency · caregiver_shift · caregiver_agency · address · uszips &nbsp;|&nbsp;
+    <strong>Enriched with: US Census ACS 2022</strong> (elderly %, median income, unemployment) &nbsp;|&nbsp; April 2026
+  </p>
+
+  <div class="kpi-row">
+    <div class="kpi blue"><div class="val">2,660,341</div><div class="lbl">Total Shifts Analyzed</div></div>
+    <div class="kpi green"><div class="val">89.6%</div><div class="lbl">Fill Rate</div></div>
+    <div class="kpi"><div class="val">10.4%</div><div class="lbl">Unmet Demand Rate</div></div>
+    <div class="kpi"><div class="val">9.5%</div><div class="lbl">Cancellation Rate</div></div>
+    <div class="kpi"><div class="val">0.9%</div><div class="lbl">Unfilled Rate</div></div>
+  </div>
+
+  <div class="info">
+    <strong>Metric Definitions:</strong>
+    <b>Filled</b> = assigned caregiver AND status≠Cancelled &nbsp;|&nbsp;
+    <b>Unfilled</b> = no caregiver AND status≠Cancelled &nbsp;|&nbsp;
+    <b>Cancelled</b> = status code 10 &nbsp;|&nbsp;
+    <b>Unmet Demand Rate</b> = (Unfilled + Cancelled) / Total &nbsp;|&nbsp;
+    <em>Excludes demo agencies (IDs: 16,123,299) and template shifts</em>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h2>Q1: Geographic Hotspots</h2>
+      <h3>Top 5 ZIP Codes by Unmet Volume</h3>
+      <table>
+        <tr><th>ZIP</th><th>City</th><th>Shifts</th><th>Unmet</th><th>Rate</th><th>65+%</th><th>Income</th></tr>
+        <tr><td>10029</td><td>NEW YORK</td><td>29,288</td><td>3,164</td><td>10.8%</td><td>16%</td><td>$36K</td></tr>
+        <tr><td>10467</td><td>BRONX</td><td>25,779</td><td>2,855</td><td>11.1%</td><td>12%</td><td>$46K</td></tr>
+        <tr><td>10457</td><td>BRONX</td><td>23,054</td><td>2,356</td><td>10.2%</td><td>9%</td><td>$41K</td></tr>
+        <tr><td>10456</td><td>Bronx</td><td>25,113</td><td>2,330</td><td>9.3%</td><td>11%</td><td>$33K</td></tr>
+        <tr><td>11206</td><td>BROOKLYN</td><td>22,406</td><td>2,194</td><td>9.8%</td><td>10%</td><td>$52K</td></tr>
+      </table>
+      <h3 style="margin-top:9px;">Monthly Trend</h3>
+      <table>
+        <tr><th>Month</th><th>Total Shifts</th><th>Unmet</th><th>Unmet Rate</th></tr>
+        <tr><td>2025-12</td><td>1,262,536</td><td>55,962</td><td>4.4%</td></tr>
+        <tr><td>2026-01</td><td>1,396,697</td><td>220,124</td><td>15.8%</td></tr>
+      </table>
+      <p style="font-size:10.5px;color:#888;margin-top:5px;">
+        NYC (Bronx · Brooklyn · Manhattan) = ~79% of all unmet volume.
+        Jan 2026 had 11% more shifts than Dec 2025 with similar unmet rates — 
+        demand growing faster than caregiver supply.
+      </p>
+    </div>
+    <div>
+      <h2>Q2: Time Trends</h2>
+      <h3>Unmet Rate by Day of Week</h3>
+      <table>
+        <tr><th>Day</th><th>Total</th><th>Unmet Rate</th><th></th></tr>
+        <tr><td>Monday</td><td>425,953</td><td>11.0%</td><td><div style='background:#e74c3c;height:9px;width:19px;border-radius:3px'></div></td></tr>
+        <tr><td>Tuesday</td><td>420,927</td><td>8.9%</td><td><div style='background:#3498db;height:9px;width:16px;border-radius:3px'></div></td></tr>
+        <tr><td>Wednesday</td><td>433,764</td><td>9.5%</td><td><div style='background:#3498db;height:9px;width:17px;border-radius:3px'></div></td></tr>
+        <tr><td>Thursday</td><td>420,998</td><td>10.7%</td><td><div style='background:#e74c3c;height:9px;width:19px;border-radius:3px'></div></td></tr>
+        <tr><td>Friday</td><td>433,928</td><td>11.7%</td><td><div style='background:#e74c3c;height:9px;width:21px;border-radius:3px'></div></td></tr>
+        <tr><td>Saturday</td><td>292,030</td><td>10.5%</td><td><div style='background:#e74c3c;height:9px;width:18px;border-radius:3px'></div></td></tr>
+        <tr><td>Sunday</td><td>231,633</td><td>10.5%</td><td><div style='background:#e74c3c;height:9px;width:18px;border-radius:3px'></div></td></tr>
+      </table>
+      <p style="font-size:10.5px;color:#888;margin-top:5px;">
+        <strong>Friday has the highest unmet rate</strong> (11.7%).
+        Tuesday is lowest (8.9%).
+        Weekend unmet (~10.5%) is moderate — Friday/Monday transitions are the key pain points.
+      </p>
+
+      <h2 style="margin-top:12px;">Census Enrichment: Key Correlations</h2>
+      <p style="font-size:11px;color:#555;margin-bottom:6px;">
+        Correlation of demographic factors with ZIP-level unmet rate (across 1,693 ZIPs, min 20 shifts):
+      </p>
+      <div style="display:flex;gap:8px;margin:6px 0;">
+        <div class="corr-box"><span class="corr-val">r=+0.023</span>% Elderly (65+)</div>
+        <div class="corr-box"><span class="corr-val">r=+0.039</span>Median Income</div>
+        <div class="corr-box"><span class="corr-val">r=-0.035</span>Pop. Density</div>
+      </div>
+      <div class="info" style="margin-top:8px;">
+        <strong>Key insight:</strong> All three correlations are near zero — 
+        unmet demand is <em>not</em> primarily explained by demographics alone.
+        This points to an <strong>operational supply problem</strong> (invitation routing, 
+        caregiver recruitment) rather than a demographic mismatch.
+      </div>
+      <p style="font-size:10.5px;color:#888;margin-top:5px;">
+        51 ZIPs have high elderly (&gt;25%) AND high unmet (&gt;15%) — critical for care continuity.<br>
+        22 ZIPs have low income (&lt;$40K) AND high unmet — likely Medicaid-dominant, harder to fill.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <h1>Factors, Enrichment &amp; Recommendations</h1>
+
+  <h2>Q3: Explanatory Factors for Unmet Demand</h2>
+  <div class="two-col">
+    <div>
+      <h3>Factor 1: Caregiver Supply per ZIP (Strongest Signal)</h3>
+      <p style="line-height:1.6;margin-bottom:7px;font-size:12px;">
+        ZIPs with unfilled shifts average <strong>199 active caregivers</strong> vs <strong>313</strong>
+        for filled shifts — a <strong>36% supply gap</strong>. This is the strongest operational factor.
+        High-volume Bronx ZIPs (10463, 10462, 10473) combine heavy shift demand with below-median caregiver density.
+      </p>
+      <h3>Factor 2: Invitation Coverage</h3>
+      <p style="line-height:1.6;margin-bottom:7px;font-size:12px;">
+        Available interaction data shows unfilled shifts receive near-zero caregiver invitations.
+        Filled shifts receive ~1.6× more invitations on average.
+        This indicates a <strong>routing/notification failure</strong> upstream of caregiver decision-making.
+      </p>
+      <h3>Factor 3: Day-of-Week Pattern</h3>
+      <p style="line-height:1.6;font-size:12px;">
+        Friday (11.7%) unmet rate is 28% above Tuesday (9.1%). Mondays (11.0%) are similarly elevated.
+        End-of-week and start-of-week coverage gaps suggest caregivers disengage from the platform on weekends.
+      </p>
+    </div>
+    <div>
+      <h3>Census Enrichment — Composite Demand Pressure Score</h3>
+      <p style="font-size:11.5px;color:#555;margin-bottom:5px;">
+        Weighted composite: Unmet Rate 30% · Volume 25% · Elderly 20% · Low Income 15% · Density 10%
+      </p>
+      <table>
+        <tr><th>ZIP</th><th>City</th><th>Score</th><th>Unmet</th><th>65+</th><th>Income</th></tr>
+        <tr><td>10029</td><td>NEW YORK</td><td><strong>50.9</strong></td><td>10.8%</td><td>16%</td><td>$36K</td></tr>
+        <tr><td>28645</td><td>Lenoir</td><td><strong>49.8</strong></td><td>100.0%</td><td>21%</td><td>$49K</td></tr>
+        <tr><td>27263</td><td>High Point</td><td><strong>48.8</strong></td><td>100.0%</td><td>18%</td><td>$51K</td></tr>
+        <tr><td>54664</td><td>Viola</td><td><strong>47.6</strong></td><td>100.0%</td><td>19%</td><td>$66K</td></tr>
+        <tr><td>02119</td><td>Roxbury</td><td><strong>47.5</strong></td><td>93.2%</td><td>15%</td><td>$37K</td></tr>
+      </table>
+      <p style="font-size:10.5px;color:#888;margin-top:5px;">
+        ZIP 10029 (East Harlem, NY) tops the composite score: highest shift volume, low income ($35K median),
+        16% elderly, 10.8% unmet rate. Bronx ZIPs dominate the top 10.
+      </p>
+      <div class="warn" style="margin-top:8px;">
+        <strong>Data quality flags:</strong>
+        (1) 4,643 demo-agency shifts now correctly excluded (type-mismatch bug fixed).
+        (2) caregiver_shift file covers only 0.03% of shifts — factor analysis should be validated with full data.
+        (3) Census income data suppressed for ~100 ZIPs (flagged as N/A, excluded from scoring).
+      </div>
+    </div>
+  </div>
+
+  <h2>Q4: Recommended Actions</h2>
+  <div class="rec">
+    <strong>1. Targeted Caregiver Recruitment in Census-Identified Supply Deserts</strong><br>
+    <span style="font-size:12px;line-height:1.7;">
+      Cross-reference high-demand-pressure ZIPs (score&gt;40) with low active-caregiver counts.
+      Priority: Bronx ZIPs 10029, 10467, 10456, 10032. These combine high elderly populations (11–16%),
+      low median incomes ($33K–$46K), and 10–11% unmet rates at massive scale (25K–29K shifts/period).
+      Launch hyper-local recruiting at community centers, churches, and workforce programs in these ZIPs.
+      <br><strong>Track:</strong> Active caregivers per shift · Time-to-fill by ZIP · Monthly caregiver onboarding rate
+    </span>
+  </div>
+  <div class="rec">
+    <strong>2. Fix Invitation Routing — Implement Automated Escalation</strong><br>
+    <span style="font-size:12px;line-height:1.7;">
+      Unfilled shifts receive near-zero invitations. Implement a rule: if 0 invites sent within 4hrs of shift creation,
+      auto-widen the invite radius by 5mi and alert the coordinator. Use caregiver proximity, availability history,
+      and discipline match to rank invitations — not broadcast blasting.
+      <br><strong>Track:</strong> % shifts with ≥1 invite within 4hrs · Invite-to-apply rate · Coordinator alert response time
+    </span>
+  </div>
+  <div class="rec">
+    <strong>3. Friday/Monday Priority Program + Medicaid ZIP Incentives</strong><br>
+    <span style="font-size:12px;line-height:1.7;">
+      Friday (11.7%) and Monday (11.0%) are consistently hardest to fill. Badge these as "Priority Shifts" in the app.
+      For the 22 low-income ZIPs with high unmet rates — where Medicaid reimbursement constrains pay —
+      explore agency-funded top-up bonuses or non-monetary incentives (parking, transport stipends).
+      <br><strong>Track:</strong> Friday fill rate · Priority shift time-to-fill · Caregiver acceptance rate in low-income ZIPs
+    </span>
+  </div>
+
+  <h2>Data Sources &amp; Outputs</h2>
+  <div class="two-col">
+    <div>
+      <h3>Data Sources Used</h3>
+      <table>
+        <tr><th>Source</th><th>Fields Used</th></tr>
+        <tr><td>shift_agency.csv</td><td>All shift outcomes, geography, status</td></tr>
+        <tr><td>caregiver_agency.csv</td><td>Active caregiver counts by ZIP</td></tr>
+        <tr><td>address.csv</td><td>Client ZIP codes for geographic join</td></tr>
+        <tr><td>uszips.csv</td><td>lat/lng, population, density, county</td></tr>
+        <tr><td style="color:#2980b9;"><strong>Census ACS 2022</strong></td><td>% 65+, median income, unemployment rate (33,774 ZCTAs)</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Output Files</h3>
+      <table>
+        <tr><th>File</th><th>Description</th></tr>
+        <tr><td>DASHBOARD.html</td><td>Interactive dashboard (open in browser)</td></tr>
+        <tr><td>SUMMARY_2PAGE.html</td><td>This document</td></tr>
+        <tr><td>01–11_*.png</td><td>11 static charts</td></tr>
+        <tr><td>02_unmet_demand_map.html</td><td>Interactive hotspot map</td></tr>
+        <tr><td>zip_enriched_full.csv</td><td>Full ZIP metrics + Census data</td></tr>
+        <tr><td>census_zcta_enrichment.csv</td><td>Raw Census ACS data (33,774 ZCTAs)</td></tr>
+        <tr><td>build_dashboard_summary.py</td><td>Full analysis code</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    CareConnect Home Assignment — Caregiver Supply &amp; Unmet Demand Hotspots &nbsp;|&nbsp;
+    Dec 2025–Jan 2026 &nbsp;|&nbsp;
+    Enriched with US Census ACS 2022 via public API (api.census.gov)
+  </div>
+</div>
+</body>
+</html>
